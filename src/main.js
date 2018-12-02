@@ -5,6 +5,7 @@ import VueLazyload from 'vue-lazyload'
 import echarts from 'echarts'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './plugins/element.js'
 
 Vue.use(VueLazyload)
 Vue.use(ElementUI);

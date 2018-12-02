@@ -6240,6 +6240,11 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
+vue-cli-plugin-element@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/vue-cli-plugin-element/download/vue-cli-plugin-element-1.0.0.tgz#2ee8cfecb9a49aabdc1d4cb58934113bddf3b4c0"
+  integrity sha1-LujP7LmkmqvcHUy1iTQRO93ztMA=
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.1.tgz#b2d3d95402a811602380783ea4f566eb875569a2"
