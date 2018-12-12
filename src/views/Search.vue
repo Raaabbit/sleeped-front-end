@@ -7,19 +7,19 @@
       //- 两种不同的查询表单
       form(v-show="this.searchType==0")
         el-input.input-addr(v-model="addr" placeholder="酒店的具体名称(建议通过高德确认）")
-        el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期")
-        el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期")
+        el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期" value-format="yyyy-MM-dd" :editable="false")
+        el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期" value-format="yyyy-MM-dd" :editable="false")
         el-button.input-btn(v-on:click="submit" type="primary" plain) 开始预测
       form(v-show="this.searchType==1")
         el-input.input-addr(v-model="addr" placeholder="请输入要查询的范围（越精确越好哦）")
-        el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期")
-        el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期")
+        el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期" value-format="yyyy-MM-dd" :editable="false")
+        el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期" value-format="yyyy-MM-dd" :editable="false")
         //- 自定义的滑动轨道组件，来选择价格区间
         el-input.input-price(v-model="lowPrice" placeholder="价格下限（单位：￥）")
         el-input.input-price(v-model="highPrice" placeholder="价格上限（单位：￥）")
         el-button.input-btn(v-on:click="submit" type="primary" plain) 开始预测
     .tip
-      p.tip-text(v-show="noParam==true") 请正确输入参数
+      p.tip-text {{this.errorMsg}}
       img.tip-img(src="../assets/lazydog.png" title="请完整输入参数")
 </template>
 <script>
@@ -34,13 +34,13 @@ export default {
     return {
       load:false,
       searchType:0,
-      noParam:false,
       // 下面的一组数据是表单内容
       addr:"",
       startDate:"",
       endDate:"",
       lowPrice:"",
-      highPrice:""
+      highPrice:"",
+      errorMsg:""
     }
   },
   mounted(){
@@ -72,9 +72,9 @@ export default {
         // axios.get();
       }else{
         setTimeout(() => {
-          this.noParam = false
-        }, 1000);
-        this.noParam = true
+          this.errorMsg = ""
+        }, 1000)
+        this.errorMsg = "请输入完整参数"
       }
     }
   }
