@@ -110,6 +110,7 @@ export default {
     color var(--color-info)
     font var(--size-normal)/1.1 var(--font-family)
   .tip-img
+    display block
     margin 20px auto
 @media only screen and (min-width: 320px ) 
   .input-addr,.input-date,.input-btn
