@@ -10,7 +10,7 @@ export default {
 <style lang="stylus" scoped>
 .g-footer
     height 60px
-    color gray
+    color var(--color-secondary-font)
     text-align center
     line-height 60px
     font-size 14px

@@ -2,45 +2,80 @@
   .search
     transition(name="el-zoom-in-top")
       .underlayment(v-show="load")
-    el-card.search-parm
-      //- 指定两种不同的查询预测模式
-      el-tabs.tabs(v-model="searchType")
-        el-tab-pane.tab(label="精确预测" v-on:click="changeType(0)")
-        el-tab-pane.tab(label="范围查询" v-on:click="changeType(1)")
+    .search-parm
+      model-tab(v-on:changeType="getType")
       //- 两种不同的查询表单
       form(v-show="this.searchType==0")
-        el-input.input-addr(placeholder="请输入酒店的具体名称(建议通过高德地图锁定目标）")
+        el-input.input-addr(v-model="addr" placeholder="酒店的具体名称(建议通过高德确认）")
         el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期")
         el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期")
-        el-button(type="primary" plain) 开始预测
+        el-button.input-btn(v-on:click="submit" type="primary" plain) 开始预测
       form(v-show="this.searchType==1")
-        el-input.input-addr(placeholder="请输入要查询的范围（越精确越好哦）")
+        el-input.input-addr(v-model="addr" placeholder="请输入要查询的范围（越精确越好哦）")
         el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期")
         el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期")
         //- 自定义的滑动轨道组件，来选择价格区间
-        el-input(placeholder="价格下限（单位：￥）")
-        el-input(placeholder="价格上限（单位：￥）")
-        el-button(type="primary" plain) 开始预测
-    .tip-img
-      img(src="../assets/tip.jpeg" title="还没有输入参数")
+        el-input.input-price(v-model="lowPrice" placeholder="价格下限（单位：￥）")
+        el-input.input-price(v-model="highPrice" placeholder="价格上限（单位：￥）")
+        el-button.input-btn(v-on:click="submit" type="primary" plain) 开始预测
+    .tip
+      p.tip-text(v-show="noParam==true") 请正确输入参数
+      img.tip-img(src="../assets/lazydog.png" title="请完整输入参数")
 </template>
 <script>
 import { Button, CollapseTransition } from 'element-ui'
+import ModelTab from '../components/ModelTab';
+import axios from 'axios';
 export default {
+  components: {
+    ModelTab
+  },
   data(){
     return {
       load:false,
+      searchType:0,
+      noParam:false,
+      // 下面的一组数据是表单内容
+      addr:"",
       startDate:"",
       endDate:"",
-      searchType:0
+      lowPrice:"",
+      highPrice:""
     }
   },
   mounted(){
-    this.load = true
+    this.load = true;
   },
   methods:{
-    changeType(type){
+    getType(type){
+      // 从model-tab接受类型之后，修改查找模式
       this.searchType = type;
+    },
+    checkParam(){
+      // 检查参数输入
+      if (this.searchType == 0) {
+        if (this.addr==""||this.startDate==""||this.endDate=="") {
+          return false;
+        }
+      }else if (this.searchType == 1) {
+        this.lowPrice = this.lowPrice==""?this.lowPrice:0
+        this.highPrice = this.highPrice==""?this.highPrice:10000
+        if (this.addr==""||this.startDate==""||this.endDate=="") {
+          return false;
+        }
+      }
+      return true;
+    },
+    submit(){
+      if(this.checkParam()){
+        this.noParam == false
+        // axios.get();
+      }else{
+        setTimeout(() => {
+          this.noParam = false
+        }, 1000);
+        this.noParam = true
+      }
     }
   }
 }
@@ -48,6 +83,7 @@ export default {
 <style lang="stylus" scoped>
 .search 
   position relative
+  padding 10px 
   .underlayment 
     position absolute
     left 0
@@ -56,26 +92,42 @@ export default {
     background-color #409EFF
     z-index -1
 .search-parm
-  width 80%
-  box-sizing border-box
-  margin 10px auto
-  
-.msg-table
-  position absolute 
-  top 20px 
-  left 50%
-  transform translateX(-50%)
-  background-color #fff
-  border-radius 10px 10px 
-  box-shadow gray 0 20px 60px 
+  margin auto
+  width 90%
+  box-shadow 0 2px 12px 0 rgba(0,0,0,.1)
+  background-color #ffffff
+  border-radius 10px
+  padding 10px 10px
+  .tabs
+    width 100%
+    .tab 
+      width 50%
+.tip
+  .tip-text
+    width 100%
+    height 22px
+    text-align center
+    color var(--color-info)
+    font var(--size-normal)/1.1 var(--font-family)
+  .tip-img
+    margin 20px auto
 @media only screen and (min-width: 320px ) 
+  .input-addr,.input-date,.input-btn
+    width 100%
+  .input-price
+    width 50%
   .underlayment
-    height 140px 
-  
+    height 200px  
+  .tip
+    width 80%
+    margin 10px auto 0
+    .tip-img
+      height 240px
 @media only screen and (min-width: 420px) 
   .underlayment
     height 200px 
-  .msg-table
+  .tip
     width 80%
-    max-width 800px
+    .tip-img
+      height 240px
 </style>
