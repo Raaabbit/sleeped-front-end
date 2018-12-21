@@ -1,0 +1,38 @@
+{
+  "code": "200",
+  "msg": "success",
+  "data": [
+    {
+      "name": "如家酒店（XXXXXX店）",
+      "img": "http://pavo.elongstatic.com/i/Hotel180_135/nw_0004WIWn.jpg",
+      "floorPrice": {
+        "date": "2018-12-13",
+        "price": "120"
+      }
+    },
+    {
+      "name": "汗听酒店XXXX",
+      "img": "http://pavo.elongstatic.com/i/Hotel180_135/nw_0004WIWn.jpg",
+      "floorPrice": {
+        "date": "2018-12-13",
+        "price": "170"
+      }
+    },
+    {
+      "name": "一百酒店XXXX",
+      "img": "http://pavo.elongstatic.com/i/Hotel180_135/nw_0004WIWn.jpg",
+      "floorPrice": {
+        "date": "2018-12-13",
+        "price": "196"
+      }
+    },
+    {
+      "name": "一百酒店XXXYSFUSJDGADHFX",
+      "img": "sdfgajfsdbfhavmfdc.png",
+      "floorPrice": {
+        "date": "2018-12-13",
+        "price": "196"
+      }
+    }
+  ]
+}
