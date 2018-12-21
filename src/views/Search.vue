@@ -21,7 +21,9 @@
     .tip
       p.tip-text {{this.errorMsg}}
       img.tip-img(src="../assets/lazydog.png" title="请完整输入参数")
-    router-view.detail(v-show="successSearch")
+    
+    transition(name="el-fade-in-linear")
+      router-view.detail
 </template>
 <script>
 import { Button, CollapseTransition } from "element-ui"
@@ -49,7 +51,6 @@ export default {
   },
   mounted() {
     this.load = true
-    this.successSearch = false
   },
   methods: {
     getType(type) {
