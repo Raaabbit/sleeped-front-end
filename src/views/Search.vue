@@ -1,5 +1,5 @@
 <template lang="pug">
-  .search
+  .page.search
     transition(name="el-zoom-in-top")
       .underlayment(v-show="load")
     .search-parm
@@ -21,13 +21,16 @@
     .tip
       p.tip-text {{this.errorMsg}}
       img.tip-img(src="../assets/lazydog.png" title="请完整输入参数")
+    router-view.detail(v-show="successSearch")
 </template>
 <script>
-import { Button, CollapseTransition } from "element-ui";
-import ModelTab from "../components/ModelTab";
+import { Button, CollapseTransition } from "element-ui"
+import BaseHeader from '../components/BaseHeader'
+import ModelTab from "../components/ModelTab"
 import axios from "axios";
 export default {
   components: {
+    BaseHeader,
     ModelTab
   },
   data() {
@@ -40,11 +43,13 @@ export default {
       endDate: "",
       lowPrice: "",
       highPrice: "",
-      errorMsg: ""
+      errorMsg: "",
+      successSearch: false
     };
   },
   mounted() {
-    this.load = true;
+    this.load = true
+    this.successSearch = false
   },
   methods: {
     getType(type) {
@@ -67,18 +72,21 @@ export default {
       return true;
     },
     exactSearch() {
-      if (this.checkParam()) {
-        // 发起请求，查看用户要查找的酒店在不在数据库中
-        // 如果有，拿到酒店的id，并转到about
+      this.successSearch = true
+      this.$router.push({path:'search/about'})
+      // if (this.checkParam()) {
+      //   // 发起请求，查看用户要查找的酒店在不在数据库中
+      //   // 如果有，拿到酒店的id，并转到about
+      //   this.successSearch = true
+      //   this.$router.push({path:'search/about'})
+      //   // 如果没有，提示用户，系统没有这家酒店的数据
 
-        // 如果没有，提示用户，系统没有这家酒店的数据
-
-      } else {
-        setTimeout(() => {
-          this.errorMsg = "";
-        }, 1000);
-        this.errorMsg = "请输入完整参数";
-      }
+      // } else {
+      //   setTimeout(() => {
+      //     this.errorMsg = "";
+      //   }, 1000);
+      //   this.errorMsg = "请输入完整参数";
+      // }
     },
     rangeSearch() {
       if (this.checkParam()) {
@@ -98,20 +106,19 @@ export default {
 <style lang="stylus" scoped>
 .search {
   position: relative;
-  padding: 10px;
-
   .underlayment {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
+    height 200px
     background-color: #409EFF;
     z-index: -1;
   }
 }
 
 .search-parm {
-  margin: auto;
+  margin: 10px auto;
   width: 90%;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
@@ -142,6 +149,14 @@ export default {
   }
 }
 
+.detail
+  position fixed
+  top 0
+  bottom 0
+  left 0
+  right 0
+  z-index 1000
+
 @media only screen and (min-width: 320px) {
   .input-addr, .input-date, .input-btn {
     width: 100%;
@@ -151,24 +166,17 @@ export default {
     width: 50%;
   }
 
-  .underlayment {
-    height: 200px;
-  }
-
   .tip {
     width: 80%;
     margin: 10px auto 0;
 
     .tip-img {
-      height: 240px;
+      height: 200px;
     }
   }
 }
 
-@media only screen and (min-width: 420px) {
-  .underlayment {
-    height: 200px;
-  }
+@media only screen and (min-width: 400px) {
 
   .tip {
     width: 80%;

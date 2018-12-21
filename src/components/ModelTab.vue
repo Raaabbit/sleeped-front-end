@@ -10,7 +10,7 @@
 </template>
 <script>
 export default {
-  name:"modeltab",
+  name:"ModelTab",
   data(){
     return {
       index:0
