@@ -1,5 +1,5 @@
 <template lang="pug">
-  .home
+  .page
     .banner-desc
       h2.g-title SLEEPED
       p.g-discribe 大数据为您提供酒店价格预测服务
@@ -10,7 +10,11 @@
 
 <script>
 import { Button, CollapseTransition } from 'element-ui'
+import BaseHeader from '../components/BaseHeader';
 export default {
+  components:{
+    BaseHeader
+  },
   name: "home",
   methods:{
     goSearch(){
@@ -20,9 +24,8 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.banner   
 .banner-desc
-    margin 10px auto 20px
+    margin 0 auto 20px
     text-align center
   .g-title
     font-size 40px 

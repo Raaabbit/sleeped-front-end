@@ -1,25 +1,24 @@
 <template lang="pug">
   #app
     .main
-      header-bar
+      base-header
       router-view.container 
     footer-bar.footer
 </template>
 
 <script>
-import HeaderBar from './components/HeaderBar'
+import BaseHeader from './components/BaseHeader'
 import FooterBar from './components/FooterBar'
 export default {
   name: 'app',
   components: {
-    HeaderBar,
+    BaseHeader,
     FooterBar
   }
 }
 </script>
 
 <style <style lang="stylus">
-
 html,body
   height 100%
 body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select
@@ -54,11 +53,15 @@ p
   overflow : hidden
 .container
   padding-bottom 60px
-
+.page
+  margin-top 60px
+  padding 5px
 .footer
   height 60px
   margin-top -60px 
 
+::-webkit-scrollbar
+  width: 0
 /* color-main = #409EFF */
 :root
   --color-main #409eff

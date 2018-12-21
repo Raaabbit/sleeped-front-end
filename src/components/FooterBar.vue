@@ -4,7 +4,7 @@
 </template>
 <script>
 export default {
-    name:"footerbar"
+    name:"FooterBar"
 };
 </script>
 <style lang="stylus" scoped>
