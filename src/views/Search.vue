@@ -6,7 +6,7 @@
       model-tab(v-on:changeType="getType")
       //- 两种不同的查询表单
       form(v-show="this.searchType==0")
-        el-input.input-addr(v-model="addr" placeholder="酒店的具体名称(建议通过高德确认）")
+        el-input.input-addr(v-model="name" placeholder="酒店的具体名称(建议通过艺龙酒店确认）")
         el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期" value-format="yyyy-MM-dd" :editable="false")
         el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期" value-format="yyyy-MM-dd" :editable="false")
         el-button.input-btn(v-on:click="exactSearch" type="primary" plain) 开始预测
@@ -40,6 +40,8 @@ export default {
       load: false,
       searchType: 0,
       // 下面的一组数据是表单内容
+      name:"",
+      id:"",
       addr: "",
       startDate: "",
       endDate: "",
@@ -60,7 +62,7 @@ export default {
     checkParam() {
       // 检查参数输入
       if (this.searchType == 0) {
-        if (this.addr == "" || this.startDate == "" || this.endDate == "") {
+        if (this.name == "" || this.startDate == "" || this.endDate == "") {
           return false;
         }
       } else if (this.searchType == 1) {
@@ -72,22 +74,39 @@ export default {
       }
       return true;
     },
-    exactSearch() {
-      this.successSearch = true
-      this.$router.push({path:'search/about'})
-      // if (this.checkParam()) {
-      //   // 发起请求，查看用户要查找的酒店在不在数据库中
-      //   // 如果有，拿到酒店的id，并转到about
-      //   this.successSearch = true
-      //   this.$router.push({path:'search/about'})
-      //   // 如果没有，提示用户，系统没有这家酒店的数据
-
-      // } else {
-      //   setTimeout(() => {
-      //     this.errorMsg = "";
-      //   }, 1000);
-      //   this.errorMsg = "请输入完整参数";
-      // }
+    getID(){
+      return axios.get('/prequery',{
+        params:{
+          "name":this.name
+        }
+      })
+      .then((res)=>{
+        if(res.data.code == 200){
+          this.id = res.data.id
+          return res.data.id
+        }else if(res.data.code == 400){
+          setTimeout(() => {
+            this.errorMsg = "";
+          }, 1000);
+          this.errorMsg = "我们的数据库中没有您要查找的酒店啦";
+        }
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    },
+    async exactSearch() {
+      if (this.checkParam()) {
+        // 发起请求，查看用户要查找的酒店在不在数据库中
+        // 如果有，拿到酒店的id，并转到about
+        await this.getID()
+        this.$router.push({path:'search/about',query:{id:this.id,startDate:this.startDate,endDate:this.endDate}})
+      } else {
+        setTimeout(() => {
+          this.errorMsg = "";
+        }, 1000);
+        this.errorMsg = "请输入完整参数";
+      }
     },
     rangeSearch() {
       if (this.checkParam()) {
@@ -107,6 +126,7 @@ export default {
 <style lang="stylus" scoped>
 .search {
   position: relative;
+  padding 10px 0
   .underlayment {
     position: absolute;
     left: 0;
@@ -118,22 +138,20 @@ export default {
   }
 }
 
-.search-parm {
-  margin: 10px auto;
+.search-parm 
+  margin: 0 auto;
   width: 90%;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   border-radius: 10px;
   padding: 10px 10px;
 
-  .tabs {
+  .tabs 
     width: 100%;
 
-    .tab {
+    .tab 
       width: 50%;
-    }
-  }
-}
+
 
 .tip {
   .tip-text {
