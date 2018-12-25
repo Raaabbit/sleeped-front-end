@@ -55,14 +55,12 @@ p
   padding-bottom 60px
 .page
   margin-top 60px
-  padding 5px
 .footer
   height 60px
   margin-top -60px 
 
 ::-webkit-scrollbar
   width: 0
-/* color-main = #409EFF */
 :root
   --color-main #409eff
   --color-success #67c23a

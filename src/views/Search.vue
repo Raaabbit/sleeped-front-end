@@ -6,7 +6,7 @@
       model-tab(v-on:changeType="getType")
       //- 两种不同的查询表单
       form(v-show="this.searchType==0")
-        el-input.input-addr(v-model="name" placeholder="酒店的具体名称(建议通过艺龙酒店确认）")
+        el-input.input-addr(v-model="name" placeholder="酒店的具体名称")
         el-date-picker.input-date(v-model="startDate" type="date" placeholder="预测开始日期" value-format="yyyy-MM-dd" :editable="false")
         el-date-picker.input-date(v-model="endDate" type="date" placeholder="预测结束日期" value-format="yyyy-MM-dd" :editable="false")
         el-button.input-btn(v-on:click="exactSearch" type="primary" plain) 开始预测
