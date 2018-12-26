@@ -27,6 +27,9 @@ export default {
       show:false
     }
   },
+  watch:{
+    // specialId:"makeChart"
+  },
   async created(){
     this.specialId = `myChart${this.index}`
     this.init();
@@ -56,7 +59,7 @@ export default {
     },
     showMore(){
       this.show = !this.show
-      setTimeout(this.makeChart,800)
+      this.makeChart()
     },
     makeChart(){
       const data = this.F2data
@@ -123,7 +126,7 @@ export default {
         color var(--color-worning)
   .my-canvas
     display block
-    width 100%
+    width 345px
     height 220px
     margin auto      
 </style>
